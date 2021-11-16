@@ -34,6 +34,13 @@ async function fetchListProduits() {
             productName.classList.add("productName");
             productName.innerHTML = resultatAPI[produit].name;
 
+            // Insertion du "price"
+            let productPrice = document.createElement("price");
+            productArticle.appendChild(productPrice);
+            productPrice.classList.add("productPrice");
+            productPrice.innerHTML ="Prix :" + resultatAPI[produit].price +" €";
+         
+
             // Insertion de la description "p"
             let productDescription = document.createElement("p");
             productArticle.appendChild(productDescription);

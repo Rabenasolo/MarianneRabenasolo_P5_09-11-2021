@@ -2,26 +2,26 @@ var str = window.location.href;
 var url = new URL(str);
 var idProduct = url.searchParams.get("id");
 console.log(idProduct);
-let article = "";
+let produit = "";
 
 const colorPicked = document. querySelector("#colors");
 const quantityPicked = document.querySelector("#quantity");
 
-getArticle();
 
-// Récupération des articles de l'API
-function getArticle() {
+
+// Récupération des produits de l'API
+function getProduit() {
     fetch("http://localhost:3000/api/products/" + idProduct)
     .then((res) => {
         return res.json();
     })
 
-    // Répartition des données de l'API dans le DOM
+    // Répartition des données de l'API insérer dans product
     .then(async function (resultatAPI) {
-        article = await resultatAPI;
-        console.table(article);
-        if (article){
-            getPost(article);
+        produit = await resultatAPI;
+        console.table(produit);
+        if (produit){
+            getPost(produit);
         }
     })
     .catch((error) => {
@@ -29,38 +29,38 @@ function getArticle() {
     })
 }
     
-function getPost(article){
+function getPost(produit){
     // Insertion de l'image
     let productImg = document.createElement("img");
     document.querySelector(".item__img").appendChild(productImg);
-    productImg.src = article.imageUrl;
-    productImg.alt = article.altTxt;
+    productImg.src = produit.imageUrl;
+    productImg.alt = produit.altTxt;
 
     // Modification du titre "h1"
     let productName = document.getElementById('title');
-    productName.innerHTML = article.name;
+    productName.innerHTML = produit.name;
 
     // Modification du prix
     let productPrice = document.getElementById('price');
-    productPrice.innerHTML = article.price;
+    productPrice.innerHTML =produit.price;
 
     // Modification de la description
     let productDescription = document.getElementById('description');
-    productDescription.innerHTML = article.description;
+    productDescription.innerHTML = produit.description;
 
     // Insertion des options de couleurs
-    for (let colors of article.colors){
+    for (let colors of produit.colors){
         console.table(colors);
         let productColors = document.createElement("option");
         document.querySelector("#colors").appendChild(productColors);
         productColors.value = colors;
         productColors.innerHTML = colors;
     }
-    addToCart(article);
+    addToCart(produit);
 }
 
 //Gestion du panier
-function addToCart(article) {
+function addToCart(produit) {
     const btn_envoyerPanier = document.querySelector("#addToCart");
 
     //Ecouter le panier avec 2 conditions couleur non nulle et quantité entre 1 et 100
@@ -73,16 +73,16 @@ function addToCart(article) {
     //Recupération du choix de la quantité
     let choixQuantite = quantityPicked.value;
 
-    //Récupération des options de l'article à ajouter au panier
+    //Récupération des options du produit à ajouter au panier
     let optionsProduit = {
         idProduit: idProduct,
         couleurProduit: choixCouleur,
         quantiteProduit: Number(choixQuantite),
-        nomProduit: article.name,
-        prixProduit: article.price,
-        descriptionProduit: article.description,
-        imgProduit: article.imageUrl,
-        altImgProduit: article.altTxt
+        nomProduit: produit.name,
+        prixProduit: produit.price,
+        descriptionProduit: produit.description,
+        imgProduit: produit.imageUrl,
+        altImgProduit: produit.altTxt
     };
 
     //Initialisation du local storage
@@ -90,14 +90,14 @@ function addToCart(article) {
 
     //fenêtre pop-up
     const popupConfirmation =() =>{
-        if(window.confirm(`Votre commande de ${choixQuantite} ${article.name} ${choixCouleur} est ajoutée au panier
+        if(window.confirm(`Votre commande de ${choixQuantite} ${produit.name} ${choixCouleur} est ajoutée au panier
 Pour consulter votre panier, cliquez sur OK`)){
             window.location.href ="cart.html";
         }
     }
 
     //Importation dans le local storage
-    //Si le panier comporte déjà au moins 1 article
+    //Si le panier comporte déjà au moins 1 produit
     if (produitLocalStorage) {
     const resultFind = produitLocalStorage.find(
         (el) => el.idProduit === idProduct && el.couleurProduit === choixCouleur);
@@ -126,3 +126,5 @@ Pour consulter votre panier, cliquez sur OK`)){
     }}
     });
 }
+
+getProduit();
