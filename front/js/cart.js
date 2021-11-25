@@ -6,8 +6,8 @@ const positionEmptyCart = document.querySelector("#cart__items");
 // Si le panier est vide
 function getCart(){
 if (produitLocalStorage === null || produitLocalStorage == 0) {
-    const emptyCart = `<p>Votre panier est vide</p>`;
-    positionEmptyCart.innerHTML = emptyCart;
+  //  const emptyCart = `<p>Votre panier est vide</p>`;
+  //  positionEmptyCart.innerHTML = "Paragraph changed!";
 } else {
 for (let produit in produitLocalStorage){
     // Insertion de l'élément "article"
@@ -104,7 +104,7 @@ function getTotals(){
     }
 
     let productTotalQuantity = document.getElementById('totalQuantity');
-    productTotalQuantity.innerHTML = totalQtt;
+    //productTotalQuantity.innerHTML = totalQtt;
     console.log(totalQtt);
 
     // Récupération du prix total
@@ -118,7 +118,7 @@ function getTotals(){
     productTotalPrice.innerHTML = totalPrice;
     console.log(totalPrice);
 }
-getTotals();
+//getTotals();
 
 // Modification d'une quantité de produit
 function modifyQtt() {
@@ -173,37 +173,12 @@ deleteProduct();
 //Instauration formulaire avec regex
 function getForm() {
     // Ajout des Regex
-    let form = document.querySelector(".cart__order__form");
+    let form = document.querySelector("cart__order__form");
 
     //Création des expressions régulières
     let emailRegExp = new RegExp('^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$');
     let charRegExp = new RegExp("^[a-zA-Z ,.'-]+$");
     let addressRegExp = new RegExp("^[0-9]{1,3}(?:(?:[,. ]){1}[-a-zA-Zàâäéèêëïîôöùûüç]+)+");
-
-    // Ecoute de la modification du prénom
-    form.firstName.addEventListener('change', function() {
-        validFirstName(this);
-    });
-
-    // Ecoute de la modification du prénom
-    form.lastName.addEventListener('change', function() {
-        validLastName(this);
-    });
-
-    // Ecoute de la modification du prénom
-    form.address.addEventListener('change', function() {
-        validAddress(this);
-    });
-
-    // Ecoute de la modification du prénom
-    form.city.addEventListener('change', function() {
-        validCity(this);
-    });
-
-    // Ecoute de la modification du prénom
-    form.email.addEventListener('change', function() {
-        validEmail(this);
-    });
 
     //validation du prénom
     const validFirstName = function(inputFirstName) {
@@ -281,7 +256,7 @@ function postForm(){
         for (let i = 0; i<produitLocalStorage.length;i++) {
             idProducts.push(produitLocalStorage[i].idProduit);
         }
-        console.log(idProducts);
+        //console.log(idProducts);
 
         const order = {
             contact : {
